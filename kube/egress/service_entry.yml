@@ -4,10 +4,10 @@ metadata:
   name: boredapi-service-entry
 spec:
   hosts:
-  - boredapi.com
+  - www.boredapi.com
   ports:
-  - number: 80
-    name: http
-    protocol: HTTP
+  - number: 443
+    name: tls
+    protocol: TLS
   resolution: DNS
   location: MESH_EXTERNAL

@@ -4,27 +4,32 @@ metadata:
   name: boredapi-through-egress-gateway
 spec:
   hosts:
-  - boredapi.com
+  - www.boredapi.com
   gateways:
   - boredapi-egressgateway
   - mesh
-  http:
+  tls:
   - match:
     - gateways:
       - mesh
-      port: 80
+      port: 443
+      sniHosts:
+      - www.boredapi.com
     route:
     - destination:
         host: istio-egressgateway.istio-system.svc.cluster.local
         subset: boredapi
         port:
-          number: 80
+          number: 443
   - match:
     - gateways:
       - boredapi-egressgateway
-      port: 80
+      port: 443
+      sniHosts:
+      - www.boredapi.com
     route:
     - destination:
-        host: boredapi.com
+        host: www.boredapi.com
         port:
-          number: 80
+          number: 443
+      weight: 100

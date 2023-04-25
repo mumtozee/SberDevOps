@@ -4,7 +4,7 @@ import requests
 
 app = Flask(__name__)
 
-URL = "http://boredapi.com/api/activity"
+URL = "https://www.boredapi.com/api/activity"
 
 
 @app.route("/")
