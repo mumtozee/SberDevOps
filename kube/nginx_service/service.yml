@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-service
+  template:
+    metadata:
+      name: nginx-service-pod
+      labels:
+        app: nginx-service
+    spec:
+      containers:
+        - image: nginx
+          name: nginx-container
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/conf.d/
+              readOnly: true
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: config
+          configMap:
+            name: nginx-service-cm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-cip
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: nginx-service

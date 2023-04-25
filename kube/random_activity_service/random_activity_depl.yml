@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-activity-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-activity-service
+  template:
+    metadata:
+      name: random-activity-service-pod
+      labels:
+        app: random-activity-service
+    spec:
+      containers:
+        - image: imumtozee/random-activity-service
+          name: random-activity-service-container
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-activity-service-cip
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 5000
+  selector:
+    app: random-activity-service

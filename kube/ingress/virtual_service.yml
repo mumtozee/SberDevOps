@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: random-activity-service-ingress
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - random-activity-service-gateway
+  http:
+    - route:
+        - destination:
+            host: nginx-service-cip
