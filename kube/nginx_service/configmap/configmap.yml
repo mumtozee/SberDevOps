@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-service-cm
+  namespace: default
+data:
+  default.conf: |-
+    server {
+        listen 80;
+        location /random_activity {
+            proxy_pass http://random-activity-service-cip/random_activity;
+        }
+        location / {
+            proxy_pass http://random-activity-service-cip/;
+        }
+    }
