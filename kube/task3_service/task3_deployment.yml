@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task3-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task3-service
+  template:
+    metadata:
+      name: task3-service-pod
+      labels:
+        app: task3-service
+    spec:
+      containers:
+        - image: imumtozee/devops_task3
+          name: task3-container
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task3-service-cip
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 5000
+  selector:
+    app: task3-service
